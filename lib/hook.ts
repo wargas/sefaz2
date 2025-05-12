@@ -9,7 +9,7 @@ export function useHook() {
     const [outrasReceitas, setOutrasReceitas] = useState<Receita[]>([])
 
     const [params, setParams] = useState({
-        grg: 56.0,
+        grg: 56.0, 
         ano: "2024",
         regiao_fiscal: 'I',
         faaf: 5700,
