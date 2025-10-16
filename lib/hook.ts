@@ -76,7 +76,7 @@ export function useHook() {
             },
             {
                 name: 'FAAF',
-                ir: true,
+                ir: false,
                 saude: false,
                 previdencia: false,
                 teto: true,
