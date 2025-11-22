@@ -118,7 +118,8 @@ export default function Home() {
                       Opções
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => changeValue({ grg: 0.56 })}>56%</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => changeValue({ grg: 0.36 })}>36% (min)</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => changeValue({ grg: 0.56 })}>56% (max)</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </Label>
