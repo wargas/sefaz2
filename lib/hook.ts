@@ -10,9 +10,9 @@ export function useHook() {
 
     const [params, setParams] = useState({
         grg: 56.0, 
-        ano: "2024",
+        ano: "2025",
         regiao_fiscal: 'I',
-        faaf: 5700,
+        faaf: 6500,
         dependentesIR: 0,
         nivel: '1',
         dependentesSF: 0,
