@@ -77,19 +77,6 @@ export default function Home() {
                 <Input min={0} type="number" value={params.dependentesIR.toString()} onChange={ev => changeValue({ dependentesIR: parseInt(ev.target.value || '0') })} />
               </div>
 
-              {/* <div className="col-span-1">
-                <Label className="line-clamp-1 flex justify-between" title="Alíquota CEPREV" htmlFor="">
-                  Alíquota CEPREV
-                  {params.complementar > 0 && <span className="" onClick={() => changeValue({ complementar: 0 })}>limpar</span>}
-                  {params.complementar == 0 && <span className="" onClick={() => changeValue({ complementar: 8.5 })}>máx</span>}
-                </Label>
-                <Input
-                  value={(params.complementar).toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}
-                  onChange={ev => changeValue({ complementar: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 10 })}
-                />
-              </div> */}
-
-
               <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
                   <span className="mr-auto">FAAF</span>
@@ -128,29 +115,7 @@ export default function Home() {
                   onChange={ev => changeValue({ grg: parseFloat(ev.target.value.replaceAll('.', '').replaceAll(',', '') || '0')/10 })} />
               </div>
              
-              {/* <div className="col-span-1">
-                <Label className="line-clamp-1 flex justify-between" title="FIDAF" htmlFor="">
-                  SINDICATO
-                  {params.sindicato > 0 && <span className="" onClick={() => changeValue({ sindicato: 0 })}>limpar</span>}
-                </Label>
-                <Input
-                  value={(params.sindicato).toLocaleString('pt-BR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
-                  onChange={ev => changeValue({ sindicato: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 100 })}
-                />
-              </div> */}
-             
-              {/* <div className="col-span-1">
-                <Label htmlFor="">Respeita o teto</Label>
-                <Select value={params.teto ? '1' : '0'} onValueChange={v => changeValue({ teto: v == '1' })}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Desconto saúde" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">Sim</SelectItem>
-                    <SelectItem value="0">Não</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div> */}
+            
               
               <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
@@ -167,6 +132,16 @@ export default function Home() {
               <Button onClick={() => setShowMenu(!showMenu)}>
                 <EyeIcon />
               </Button>
+              <div className="col-span-1">
+                <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
+                  <span>Dias Trabalhados</span>
+                  {params.diasTrabalhados > 0 && <span className="" onClick={() => changeValue({ diasTrabalhados: 30 })}>30 dias</span>}
+                </Label>
+                <Input
+                  value={params.diasTrabalhados}
+                  onChange={ev => changeValue({ diasTrabalhados: parseInt(ev.target.value||'0')||0})}
+                />
+              </div>
               <div className="ml-auto"></div>
               <FormProventos onSave={r => setOutrasReceitas(old => ([...old, { ...r, id: Math.random().toString() }]))}>
                 <Button variant={'outline'}><PlusIcon /> provento</Button>

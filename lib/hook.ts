@@ -26,7 +26,8 @@ export function useHook() {
         saude: true,
         teto: false,
         ajuste: 0,
-        consignado: 0
+        consignado: 0,
+        diasTrabalhados: 30
     })
 
     const receitas = useMemo(() => {
@@ -37,9 +38,10 @@ export function useHook() {
         const nivel = params.nivel as "1"
 
         const vencimento = config.tabela[ano][nivel]
-
                 
         const regiao_fiscal = params.regiao_fiscal as "I"
+
+        const quocienteDiasTrabalhados = params.diasTrabalhados / 30;
 
         return [
             {
@@ -48,7 +50,7 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: vencimento
+                value: vencimento * quocienteDiasTrabalhados
             },
             {
                 name: 'GRG - Gratificação por Resultado GOATE',
@@ -56,7 +58,7 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: vencimento * params.grg / 100
+                value: (vencimento * params.grg / 100) * quocienteDiasTrabalhados
             },
             {
                 name: 'GOF - Gratificação por Operação Fiscal',
@@ -64,7 +66,7 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: vencimento * config.regioes_fiscais[regiao_fiscal]
+                value: (vencimento * config.regioes_fiscais[regiao_fiscal]) * quocienteDiasTrabalhados
             },
             {
                 name: 'GRV - Gratificação por Risco de Vida',
@@ -72,7 +74,7 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: vencimento * 0.05
+                value: (vencimento * 0.05) * quocienteDiasTrabalhados
             },
             {
                 name: 'FAAF',
@@ -80,7 +82,7 @@ export function useHook() {
                 saude: false,
                 previdencia: false,
                 teto: true,
-                value: params.faaf
+                value: (params.faaf) * quocienteDiasTrabalhados
             },
             ...outrasReceitas
         ]
