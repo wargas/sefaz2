@@ -24,7 +24,7 @@ export function useHook() {
         fidaf: 0,
         rav: 0,
         saude: true,
-        teto: false,
+        teto: true,
         ajuste: 0,
         consignado: 0,
         diasTrabalhados: 30
