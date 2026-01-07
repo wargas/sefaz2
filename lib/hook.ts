@@ -81,7 +81,7 @@ export function useHook() {
                 ir: false,
                 saude: false,
                 previdencia: false,
-                teto: true,
+                teto: false,
                 value: (params.faaf) * quocienteDiasTrabalhados
             },
             ...outrasReceitas
@@ -147,7 +147,7 @@ export function useHook() {
 
         return [
             // { name: 'saude', value: params.saude ? bcSaude * 0.02 : 0 },
-            { name: 'previfor', value: valorFunape },
+            { name: 'rgps', value: valorFunape },
             { name: 'Prev Complementar', value: valorPrevComplementar },
             { name: 'sindicato', value: params.sindicato },
             { name: 'irpf', value: valorIR },

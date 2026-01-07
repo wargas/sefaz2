@@ -7,7 +7,7 @@ const ajustes = {
 export const config = {
   tetoINSS: 8157.4,
   valorPontoRAV: 11.54,
-  remuneracaoGovernador: 48656.54,
+  remuneracaoGovernador: 46366.19,
   "tabela": {
     "2023": {
       1: 3650.77,
