@@ -151,8 +151,8 @@ export default function Home() {
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">FUNAPREV</SelectItem>
-                    <SelectItem value="2">FUNAFIN</SelectItem>
+                    <SelectItem value="1">FUNAFIN</SelectItem>
+                    <SelectItem value="2">FUNAPREV</SelectItem>
                   </SelectContent>
                 </Select>                
               </div>
