@@ -129,9 +129,9 @@ export default function Home() {
               </div>
             </div>
             <div className="mt-2 flex gap-2 justify-end">
-              <Button onClick={() => setShowMenu(!showMenu)}>
+              {/* <Button onClick={() => setShowMenu(!showMenu)}>
                 <EyeIcon />
-              </Button>
+              </Button> */}
               <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Dias Trabalhados</span>
