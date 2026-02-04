@@ -27,7 +27,8 @@ export function useHook() {
         teto: true,
         ajuste: 0,
         consignado: 0,
-        diasTrabalhados: 30
+        diasTrabalhados: 30,
+        regime_tributario: 1
     })
 
     const receitas = useMemo(() => {

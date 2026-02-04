@@ -28,7 +28,7 @@ export default function Home() {
             <div className={cn({ "grid": showMenu, "hidden": !showMenu }, "transition-all grid-cols-2 lg:grid-cols-7 gap-4")}>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">ANO</Label>
-                <Select value={params.ano} onValueChange={v => changeValue({ ano: v })}>
+                <Select value={params.ano} onValueChange={(v:any) => changeValue({ ano: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Titulação" />
                   </SelectTrigger>
@@ -41,7 +41,7 @@ export default function Home() {
               </div>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">Referência</Label>
-                <Select value={params.nivel} onValueChange={v => changeValue({ nivel: v })}>
+                <Select value={params.nivel} onValueChange={(v:any) => changeValue({ nivel: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Referência" />
                   </SelectTrigger>
@@ -58,7 +58,7 @@ export default function Home() {
               </div>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">Região Fiscal</Label>
-                <Select value={params.regiao_fiscal} onValueChange={v => changeValue({ regiao_fiscal: v })}>
+                <Select value={params.regiao_fiscal} onValueChange={(v:any) => changeValue({ regiao_fiscal: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
@@ -141,6 +141,22 @@ export default function Home() {
                   value={params.diasTrabalhados}
                   onChange={ev => changeValue({ diasTrabalhados: parseInt(ev.target.value||'0')||0})}
                 />
+              </div>
+              <div className="col-span-1">
+                <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
+                  <span>Regime Previdência</span>
+                </Label>
+                 <Select value={params.regime_tributario} onValueChange={(v:any) => changeValue({ regime_tributario: v })}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Região Fiscal" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">Com Complementar</SelectItem>
+                    <SelectItem value="2">Sem Complementar + Teto INSS</SelectItem>
+                    <SelectItem value="3">Sem Complementar</SelectItem>
+                  </SelectContent>
+                </Select>
+                
               </div>
               <div className="ml-auto"></div>
               <FormProventos onSave={r => setOutrasReceitas(old => ([...old, { ...r, id: Math.random().toString() }]))}>
