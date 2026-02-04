@@ -9,7 +9,7 @@ export function useHook() {
     const [outrasReceitas, setOutrasReceitas] = useState<Receita[]>([])
 
     const [params, setParams] = useState({
-        grg: 56.0, 
+        grg: 56.0,
         ano: "2025",
         regiao_fiscal: 'I',
         faaf: 6500,
@@ -28,18 +28,18 @@ export function useHook() {
         ajuste: 0,
         consignado: 0,
         diasTrabalhados: 30,
-        regime_tributario: 1
+        regime_tributario: '1'
     })
 
     const receitas = useMemo(() => {
 
-        
+
         const ano = params.ano as "2024";
 
         const nivel = params.nivel as "1"
 
         const vencimento = config.tabela[ano][nivel]
-                
+
         const regiao_fiscal = params.regiao_fiscal as "I"
 
         const quocienteDiasTrabalhados = params.diasTrabalhados / 30;
@@ -135,8 +135,17 @@ export function useHook() {
 
     const descontos = useMemo(() => {
 
-        const valorFunape = bcPrevidencia.previdor * 0.14
-        const valorPrevComplementar = bcPrevidencia.complementar * (params.complementar / 100)
+        let valorFunape = bcPrevidencia.previdor * 0.14
+        let valorPrevComplementar = bcPrevidencia.complementar * (params.complementar / 100)
+
+        if (params.regime_tributario == '2') {
+            valorPrevComplementar = 0;
+        }
+
+        if (params.regime_tributario == '3') {
+            valorFunape = (bcPrevidencia.previdor + bcPrevidencia.complementar) * 0.14
+            valorPrevComplementar = 0;
+        }
 
         const bcIR2 = bcIR - valorFunape - valorPrevComplementar;
 
@@ -158,7 +167,7 @@ export function useHook() {
     }, [receitas, params])
 
     const changeValue = useCallback((data: Partial<typeof params>) => {
-        if('grg' in data) {
+        if ('grg' in data) {
             console.log(data)
         }
         setParams(p => ({ ...p, ...data }))

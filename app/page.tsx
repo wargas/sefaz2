@@ -146,7 +146,7 @@ export default function Home() {
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Regime Previdência</span>
                 </Label>
-                 <Select value={params.regime_tributario} onValueChange={(v:any) => changeValue({ regime_tributario: v })}>
+                 <Select value={params.regime_tributario} onValueChange={(v:any) => changeValue({ regime_tributario: String(v) })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
