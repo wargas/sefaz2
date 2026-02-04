@@ -28,7 +28,7 @@ export function useHook() {
         ajuste: 0,
         consignado: 0,
         diasTrabalhados: 30,
-        regime_tributario: '1'
+        regime_tributario: '1',
     })
 
     const receitas = useMemo(() => {
@@ -139,10 +139,6 @@ export function useHook() {
         let valorPrevComplementar = bcPrevidencia.complementar * (params.complementar / 100)
 
         if (params.regime_tributario == '2') {
-            valorPrevComplementar = 0;
-        }
-
-        if (params.regime_tributario == '3') {
             valorFunape = (bcPrevidencia.previdor + bcPrevidencia.complementar) * 0.14
             valorPrevComplementar = 0;
         }

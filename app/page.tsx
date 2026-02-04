@@ -151,12 +151,20 @@ export default function Home() {
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">Com Complementar</SelectItem>
-                    <SelectItem value="2">Sem Complementar + Teto INSS</SelectItem>
-                    <SelectItem value="3">Sem Complementar</SelectItem>
+                    <SelectItem value="1">FUNAPREV COM RPC</SelectItem>
+                    <SelectItem value="2">FUNAFIN</SelectItem>
                   </SelectContent>
-                </Select>
-                
+                </Select>                
+              </div>
+               <div className="col-span-1">
+                <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
+                  <span>Aliquota Complementar</span>
+                  <span className="" onClick={() => changeValue({ complementar: 0 })}>0</span>
+                  <span className="" onClick={() => changeValue({ complementar: 8.5 })}>8,5</span>
+                </Label>
+                <Input
+                  value={(params.complementar).toLocaleString('pt-BR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                  onChange={ev => changeValue({ complementar: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 100 })} />
               </div>
               <div className="ml-auto"></div>
               <FormProventos onSave={r => setOutrasReceitas(old => ([...old, { ...r, id: Math.random().toString() }]))}>
