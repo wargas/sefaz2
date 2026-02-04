@@ -159,8 +159,8 @@ export default function Home() {
                <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Aliquota Complementar</span>
-                  <span className="" onClick={() => changeValue({ complementar: 0 })}>0</span>
-                  <span className="" onClick={() => changeValue({ complementar: 8.5 })}>8,5</span>
+                  <span className="" onClick={() => changeValue({ complementar: 0 })}>0,00</span>
+                  <span className="" onClick={() => changeValue({ complementar: 8.5 })}>8,50</span>
                 </Label>
                 <Input
                   value={(params.complementar).toLocaleString('pt-BR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
