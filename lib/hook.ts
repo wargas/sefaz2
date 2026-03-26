@@ -106,10 +106,10 @@ export function useHook() {
         let geral_teto_no_prev = sumBy(filter(receitas, { previdencia: false, teto: true }), 'value')
 
         if (geral_teto > config.remuneracaoGovernador && params.teto) {
-            geral_teto = config.remuneracaoGovernador
+            geral_teto = config.remuneracaoGovernador -  geral_teto_no_prev
         }
 
-        const geral = geral_teto + geral_no_teto - geral_teto_no_prev;
+        const geral = geral_teto + geral_no_teto;
 
         const bcPrevifor = config.tetoINSS;
         const bcComplementar = geral - bcPrevifor
