@@ -103,12 +103,13 @@ export function useHook() {
     const bcPrevidencia = useMemo(() => {
         let geral_teto = sumBy(filter(receitas, { previdencia: true, teto: true }), 'value')
         let geral_no_teto = sumBy(filter(receitas, { previdencia: true, teto: false }), 'value')
+        let geral_teto_no_prev = sumBy(filter(receitas, { previdencia: false, teto: true }), 'value')
 
         if (geral_teto > config.remuneracaoGovernador && params.teto) {
             geral_teto = config.remuneracaoGovernador
         }
 
-        const geral = geral_teto + geral_no_teto;
+        const geral = geral_teto + geral_no_teto - geral_teto_no_prev;
 
         const bcPrevifor = config.tetoINSS;
         const bcComplementar = geral - bcPrevifor
