@@ -73,7 +73,7 @@ export function useHook() {
                 name: 'GRV - Gratificação por Risco de Vida',
                 ir: true,
                 saude: true,
-                previdencia: false,
+                previdencia: true,
                 teto: true,
                 value: (vencimento * 0.05) * quocienteDiasTrabalhados
             },
