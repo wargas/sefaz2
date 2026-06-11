@@ -16,18 +16,16 @@ export function useHook() {
         dependentesIR: 0,
         nivel: '1',
         dependentesSF: 0,
-        gdf: 100,
-        ita: 0.15,
         complementar: 8.5,
         sindicato: 0,
         cargo: 'AUDITOR',
         fidaf: 0,
-        rav: 0,
         saude: true,
         teto: true,
         ajuste: 0,
         consignado: 0,
         diasTrabalhados: 30,
+        quinquenios: 0,
         regime_tributario: '1',
     })
 
@@ -46,6 +44,7 @@ export function useHook() {
 
         return [
             {
+                id: 'vencimento',
                 name: 'vencimento',
                 ir: true,
                 saude: true,
@@ -54,6 +53,7 @@ export function useHook() {
                 value: vencimento * quocienteDiasTrabalhados
             },
             {
+                id: 'grg',
                 name: 'GRG - Gratificação por Resultado GOATE',
                 ir: true,
                 saude: true,
@@ -62,6 +62,7 @@ export function useHook() {
                 value: (vencimento * params.grg / 100) * quocienteDiasTrabalhados
             },
             {
+                id: 'gof',
                 name: 'GOF - Gratificação por Operação Fiscal',
                 ir: true,
                 saude: true,
@@ -70,6 +71,7 @@ export function useHook() {
                 value: (vencimento * config.regioes_fiscais[regiao_fiscal]) * quocienteDiasTrabalhados
             },
             {
+                id: 'grv',
                 name: 'GRV - Gratificação por Risco de Vida',
                 ir: true,
                 saude: true,
@@ -78,12 +80,22 @@ export function useHook() {
                 value: (vencimento * 0.05) * quocienteDiasTrabalhados
             },
             {
+                id: 'faaf',
                 name: 'FAAF',
                 ir: false,
                 saude: false,
                 previdencia: false,
                 teto: false,
                 value: (params.faaf) * quocienteDiasTrabalhados
+            },
+            {
+                id: 'quinquenio',
+                name: 'quinquênios',
+                ir: true,
+                saude: true,
+                previdencia: true,
+                teto: true,
+                value: (vencimento * 0.05 * params.quinquenios) * quocienteDiasTrabalhados
             },
             ...outrasReceitas
         ]

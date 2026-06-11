@@ -28,7 +28,7 @@ export default function Home() {
             <div className={cn({ "grid": showMenu, "hidden": !showMenu }, "transition-all grid-cols-2 lg:grid-cols-7 gap-4")}>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">ANO</Label>
-                <Select value={params.ano} onValueChange={(v:any) => changeValue({ ano: v })}>
+                <Select value={params.ano} onValueChange={(v: any) => changeValue({ ano: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Titulação" />
                   </SelectTrigger>
@@ -41,7 +41,7 @@ export default function Home() {
               </div>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">Referência</Label>
-                <Select value={params.nivel} onValueChange={(v:any) => changeValue({ nivel: v })}>
+                <Select value={params.nivel} onValueChange={(v: any) => changeValue({ nivel: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Referência" />
                   </SelectTrigger>
@@ -58,7 +58,7 @@ export default function Home() {
               </div>
               <div className="col-span-1">
                 <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">Região Fiscal</Label>
-                <Select value={params.regiao_fiscal} onValueChange={(v:any) => changeValue({ regiao_fiscal: v })}>
+                <Select value={params.regiao_fiscal} onValueChange={(v: any) => changeValue({ regiao_fiscal: v })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
@@ -112,12 +112,31 @@ export default function Home() {
                 </Label>
                 <Input
                   value={(params.grg).toLocaleString('pt-BR', { maximumFractionDigits: 1, minimumFractionDigits: 1 })}
-                  onChange={ev => changeValue({ grg: parseFloat(ev.target.value.replaceAll('.', '').replaceAll(',', '') || '0')/10 })} />
+                  onChange={ev => changeValue({ grg: parseFloat(ev.target.value.replaceAll('.', '').replaceAll(',', '') || '0') / 10 })} />
               </div>
-             
-            
-              
+
               <div className="col-span-1">
+              <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
+                  <span className="mr-auto">Quiquenios</span>
+                  {/* <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      Opções
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => changeValue({ grg: 36 })}>36% (min)</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => changeValue({ grg: 56 })}>56% (max)</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu> */}
+                </Label>
+                <Input min={0} type="number" value={params.quinquenios.toString()} onChange={ev => changeValue({ quinquenios: parseInt(ev.target.value || '0') })} />
+              </div>
+
+
+              
+            </div>
+            <div className="mt-2 flex gap-2 justify-end">
+
+            <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Consignados</span>
                   {params.consignado > 0 && <span className="" onClick={() => changeValue({ consignado: 0 })}>limpar</span>}
@@ -127,8 +146,6 @@ export default function Home() {
                   onChange={ev => changeValue({ consignado: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 100 })}
                 />
               </div>
-            </div>
-            <div className="mt-2 flex gap-2 justify-end">
               {/* <Button onClick={() => setShowMenu(!showMenu)}>
                 <EyeIcon />
               </Button> */}
@@ -139,14 +156,14 @@ export default function Home() {
                 </Label>
                 <Input
                   value={params.diasTrabalhados}
-                  onChange={ev => changeValue({ diasTrabalhados: parseInt(ev.target.value||'0')||0})}
+                  onChange={ev => changeValue({ diasTrabalhados: parseInt(ev.target.value || '0') || 0 })}
                 />
               </div>
               <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Regime Previdência</span>
                 </Label>
-                 <Select value={params.regime_tributario} onValueChange={(v:any) => changeValue({ regime_tributario: String(v) })}>
+                <Select value={params.regime_tributario} onValueChange={(v: any) => changeValue({ regime_tributario: String(v) })}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Região Fiscal" />
                   </SelectTrigger>
@@ -154,9 +171,9 @@ export default function Home() {
                     <SelectItem value="1">FUNAPREV</SelectItem>
                     <SelectItem value="2">FUNAFIN</SelectItem>
                   </SelectContent>
-                </Select>                
+                </Select>
               </div>
-               <div className="col-span-1">
+              <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Aliquota Complementar</span>
                   <span className="" onClick={() => changeValue({ complementar: 0 })}>0,00</span>

@@ -1,6 +1,6 @@
 export type Receita = {
-    id?: string
-    name: string,
+    id: string
+    name: string
     ir: boolean
     saude: boolean
     previdencia: boolean
