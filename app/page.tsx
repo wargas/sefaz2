@@ -118,15 +118,7 @@ export default function Home() {
               <div className="col-span-1">
               <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
                   <span className="mr-auto">Quiquenios</span>
-                  {/* <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      Opções
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => changeValue({ grg: 36 })}>36% (min)</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => changeValue({ grg: 56 })}>56% (max)</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu> */}
+                 
                 </Label>
                 <Input min={0} type="number" value={params.quinquenios.toString()} onChange={ev => changeValue({ quinquenios: parseInt(ev.target.value || '0') })} />
               </div>

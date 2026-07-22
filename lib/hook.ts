@@ -91,9 +91,9 @@ export function useHook() {
             {
                 id: 'quinquenio',
                 name: 'quinquênios',
-                ir: true,
+                ir: false,
                 saude: true,
-                previdencia: true,
+                previdencia: false,
                 teto: true,
                 value: (vencimento * 0.05 * params.quinquenios) * quocienteDiasTrabalhados
             },
@@ -138,9 +138,10 @@ export function useHook() {
 
         let ir_teto = sumBy(filter(receitas, { ir: true, teto: true }), 'value')
         const ir_no_teto = sumBy(filter(receitas, { ir: true, teto: false }), 'value')
+        const no_ir_teto = sumBy(filter(receitas, { ir: false, teto: true }), 'value')
 
         if (ir_teto > config.remuneracaoGovernador && params.teto) {
-            ir_teto = config.remuneracaoGovernador
+            ir_teto = config.remuneracaoGovernador - no_ir_teto
         }
 
         return ir_teto + ir_no_teto - descontoDependente
