@@ -50,7 +50,8 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: vencimento * quocienteDiasTrabalhados
+                value: vencimento * quocienteDiasTrabalhados,
+                grupo: "remuneracao"
             },
             {
                 id: 'grg',
@@ -59,7 +60,8 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: (vencimento * params.grg / 100) * quocienteDiasTrabalhados
+                value: (vencimento * params.grg / 100) * quocienteDiasTrabalhados,
+                grupo: "remuneracao"
             },
             {
                 id: 'gof',
@@ -68,7 +70,8 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: (vencimento * config.regioes_fiscais[regiao_fiscal]) * quocienteDiasTrabalhados
+                value: (vencimento * config.regioes_fiscais[regiao_fiscal]) * quocienteDiasTrabalhados,
+                grupo: "remuneracao"
             },
             {
                 id: 'grv',
@@ -77,7 +80,8 @@ export function useHook() {
                 saude: true,
                 previdencia: true,
                 teto: true,
-                value: (vencimento * 0.05) * quocienteDiasTrabalhados
+                value: (vencimento * 0.05) * quocienteDiasTrabalhados,
+                grupo: "remuneracao"
             },
             {
                 id: 'faaf',
@@ -86,7 +90,8 @@ export function useHook() {
                 saude: false,
                 previdencia: false,
                 teto: false,
-                value: (params.faaf) * quocienteDiasTrabalhados
+                value: (params.faaf) * quocienteDiasTrabalhados,
+                grupo: "indenizacao"
             },
             {
                 id: 'quinquenio',
@@ -95,7 +100,8 @@ export function useHook() {
                 saude: true,
                 previdencia: false,
                 teto: true,
-                value: (vencimento * 0.05 * params.quinquenios) * quocienteDiasTrabalhados
+                value: (vencimento * 0.05 * params.quinquenios) * quocienteDiasTrabalhados,
+                grupo: "remuneracao"
             },
             ...outrasReceitas
         ]
@@ -167,12 +173,12 @@ export function useHook() {
 
         return [
             // { name: 'saude', value: params.saude ? bcSaude * 0.02 : 0 },
-            { name: 'rgps', value: valorFunape },
-            { name: 'Prev Complementar', value: valorPrevComplementar },
-            { name: 'sindicato', value: params.sindicato },
-            { name: 'irpf', value: valorIR },
-            { name: 'desconto teto', value: descontoTeto },
-            { name: 'consignados', value: params.consignado }
+            { name: 'rgps', value: valorFunape, grupo: 'previdencia' },
+            { name: 'Prev Complementar', value: valorPrevComplementar, grupo: 'previdencia' },
+            { name: 'sindicato', value: params.sindicato, grupo: 'outros' },
+            { name: 'irpf', value: valorIR, grupo: 'imposto_renda' },
+            { name: 'desconto teto', value: descontoTeto, grupo: 'outros' },
+            { name: 'consignados', value: params.consignado, grupo: 'outros' },
         ]
     }, [receitas, params])
 

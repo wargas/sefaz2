@@ -7,11 +7,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { config } from "@/lib/config";
 import { useHook } from "@/lib/hook";
 import { cn, formatNumber } from "@/lib/utils";
-import { sortBy, sumBy } from "lodash";
+import { filter, sortBy, sumBy } from "lodash";
 import { EyeIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -116,19 +116,19 @@ export default function Home() {
               </div>
 
               <div className="col-span-1">
-              <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
+                <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
                   <span className="mr-auto">Quiquenios</span>
-                 
+
                 </Label>
                 <Input min={0} type="number" value={params.quinquenios.toString()} onChange={ev => changeValue({ quinquenios: parseInt(ev.target.value || '0') })} />
               </div>
 
 
-              
+
             </div>
             <div className="mt-2 flex gap-2 justify-end">
 
-            <div className="col-span-1">
+              <div className="col-span-1">
                 <Label className="line-clamp-1 justify-between flex" title="Ajuste" htmlFor="">
                   <span>Consignados</span>
                   {params.consignado > 0 && <span className="" onClick={() => changeValue({ consignado: 0 })}>limpar</span>}
@@ -184,33 +184,61 @@ export default function Home() {
           <CardContent className="p-0 border-t">
             <Table>
               <TableBody>
-                {sortBy(receitas, 'value').reverse().filter(r => r.value > 0).map(r => (
-                  <TableRow key={r.name}>
-                    <TableCell className="uppercase group pl-10 font-light">
-                      {r.name}
-                      {r.id && (
-                        <span onClick={() => removeOutrasReceitasById(r.id || '')} className="ml-4 lowercase opacity-0 group-hover:opacity-100 cursor-pointer">excluir</span>
-                      )}
-                    </TableCell>
-                    <TableCell className="text-end font-bold">{formatNumber(r.value)}</TableCell>
+                {['remuneracao', 'indenizacao'].map(grupo => ({ grupo, items: filter(receitas, { grupo }) })).map(({ grupo, items }) => <>
+                  <TableRow key={grupo}>
+                    <TableHead>{grupo.toUpperCase()}</TableHead>
+                    <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
                   </TableRow>
-                ))}
+                  {sortBy(items, 'value').reverse().filter(r => r.value > 0).map(r => (
+                    <TableRow key={r.name}>
+                      <TableCell className="uppercase group pl-10 font-light">
+                        {r.name}
+                        {r.id && (
+                          <span onClick={() => removeOutrasReceitasById(r.id || '')} className="ml-4 lowercase opacity-0 group-hover:opacity-100 cursor-pointer">excluir</span>
+                        )}
+                      </TableCell>
+                      <TableCell className="text-end font-bold">{formatNumber(r.value)}</TableCell>
+                    </TableRow>
+                  ))}
+
+                </>)}
+
                 <TableRow>
-                  <TableHead className="bg-accent">Receita bruta</TableHead>
+                  <TableHead className="bg-accent">RECEITA BRUTA</TableHead>
                   <TableHead className="text-end font-bold bg-accent">{formatNumber(sumBy(receitas, 'value'))}</TableHead>
                 </TableRow>
-                {sortBy(descontos, 'value').filter(d => d.value > 0).reverse().map(d => (
+                <TableRow>
+                  <TableCell className="border-none"></TableCell>
+                </TableRow>
+
+                {['previdencia', 'imposto_renda','outros'].map(grupo => ({ grupo, items: filter(descontos, { grupo }) })).map(({ grupo, items }) => <>
+                  <TableRow key={grupo}>
+                    <TableHead>{grupo.toUpperCase()}</TableHead>
+                    <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
+                  </TableRow>
+                  {sortBy(items, 'value').reverse().filter(r => r.value > 0).map(r => (
+                    <TableRow key={r.name}>
+                      <TableCell className="uppercase group pl-10 font-light">
+                        {r.name}
+                       
+                      </TableCell>
+                      <TableCell className="text-end font-bold">{formatNumber(r.value)}</TableCell>
+                    </TableRow>
+                  ))}
+
+                </>)}
+                {/* {sortBy(descontos, 'value').filter(d => d.value > 0).reverse().map(d => (
                   <TableRow>
                     <TableCell className="uppercase pl-10 font-light">{d.name}</TableCell>
                     <TableCell className="text-end font-bold">{formatNumber(d.value)}</TableCell>
                   </TableRow>
-                ))}
+                ))} */}
                 <TableRow>
-                  <TableHead className="bg-accent">Descontos</TableHead>
+                  <TableHead className="bg-accent">DESCONTOS</TableHead>
                   <TableHead className="text-end font-bold bg-accent">{formatNumber(sumBy(descontos, 'value'))}</TableHead>
                 </TableRow>
                 <TableRow>
-                  <TableHead className="bg-accent">Líquido</TableHead>
+                  <TableHead className="bg-accent">LIQUIDO</TableHead>
                   <TableHead className="text-end font-bold bg-accent">{formatNumber(sumBy(receitas, 'value') - sumBy(descontos, 'value'))}</TableHead>
                 </TableRow>
               </TableBody>
