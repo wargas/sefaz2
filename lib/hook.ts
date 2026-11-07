@@ -176,7 +176,7 @@ export function useHook() {
             { name: 'rgps', value: valorFunape, grupo: 'previdencia' },
             { name: 'Prev Complementar', value: valorPrevComplementar, grupo: 'previdencia' },
             { name: 'sindicato', value: params.sindicato, grupo: 'outros' },
-            { name: 'irpf', value: valorIR, grupo: 'imposto_renda' },
+            { name: 'irpf', value: valorIR, grupo: 'outros' },
             { name: 'desconto teto', value: descontoTeto, grupo: 'outros' },
             { name: 'consignados', value: params.consignado, grupo: 'outros' },
         ]

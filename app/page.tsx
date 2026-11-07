@@ -185,12 +185,12 @@ export default function Home() {
             <Table>
               <TableBody>
                 {['remuneracao', 'indenizacao'].map(grupo => ({ grupo, items: filter(receitas, { grupo }) })).map(({ grupo, items }) => <>
-                  <TableRow key={grupo}>
+                  <TableRow key={`grupo-r-${grupo}`}>
                     <TableHead>{grupo.toUpperCase()}</TableHead>
                     <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
                   </TableRow>
                   {sortBy(items, 'value').reverse().filter(r => r.value > 0).map(r => (
-                    <TableRow key={r.name}>
+                    <TableRow key={`receitas-${r.name}`}>
                       <TableCell className="uppercase group pl-10 font-light">
                         {r.name}
                         {r.id && (
@@ -211,13 +211,13 @@ export default function Home() {
                   <TableCell className="border-none"></TableCell>
                 </TableRow>
 
-                {['previdencia', 'imposto_renda','outros'].map(grupo => ({ grupo, items: filter(descontos, { grupo }) })).map(({ grupo, items }) => <>
-                  <TableRow key={grupo}>
+                {['previdencia','outros'].map(grupo => ({ grupo, items: filter(descontos, { grupo }) })).map(({ grupo, items }) => <>
+                  <TableRow key={`grupo-d-${grupo}`}>
                     <TableHead>{grupo.toUpperCase()}</TableHead>
                     <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
                   </TableRow>
                   {sortBy(items, 'value').reverse().filter(r => r.value > 0).map(r => (
-                    <TableRow key={r.name}>
+                    <TableRow key={`descontos-${r.name}`}>
                       <TableCell className="uppercase group pl-10 font-light">
                         {r.name}
                        
