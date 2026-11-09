@@ -1,6 +1,6 @@
 import { config } from "@/lib/config";
 import { Receita } from "@/types";
-import { filter, sumBy } from "lodash";
+import { filter, find, sumBy } from "lodash";
 import { useCallback, useMemo, useState } from "react";
 
 
@@ -21,12 +21,13 @@ export function useHook() {
         cargo: 'AUDITOR',
         fidaf: 0,
         saude: true,
-        teto: true,
         ajuste: 0,
         consignado: 0,
         diasTrabalhados: 30,
         quinquenios: 0,
         regime_tributario: '1',
+        teto: config.tetoSTF * 0.9025,
+        abonoPermanencia: false
     })
 
     const receitas = useMemo(() => {
@@ -111,8 +112,8 @@ export function useHook() {
         let geral_teto = sumBy(filter(receitas, { saude: true, teto: true }), 'value')
         let geral_no_teto = sumBy(filter(receitas, { saude: true, teto: false }), 'value')
 
-        if (geral_teto > config.remuneracaoGovernador && params.teto) {
-            geral_teto = config.remuneracaoGovernador
+        if (geral_teto > params.teto && params.teto) {
+            geral_teto = params.teto
         }
 
         return geral_teto + geral_no_teto;
@@ -123,8 +124,8 @@ export function useHook() {
         let geral_no_teto = sumBy(filter(receitas, { previdencia: true, teto: false }), 'value')
         let geral_teto_no_prev = sumBy(filter(receitas, { previdencia: false, teto: true }), 'value')
 
-        if (geral_teto > config.remuneracaoGovernador && params.teto) {
-            geral_teto = config.remuneracaoGovernador -  geral_teto_no_prev
+        if (geral_teto > params.teto && params.teto) {
+            geral_teto = params.teto - geral_teto_no_prev
         }
 
         const geral = geral_teto + geral_no_teto;
@@ -146,8 +147,8 @@ export function useHook() {
         const ir_no_teto = sumBy(filter(receitas, { ir: true, teto: false }), 'value')
         const no_ir_teto = sumBy(filter(receitas, { ir: false, teto: true }), 'value')
 
-        if (ir_teto > config.remuneracaoGovernador && params.teto) {
-            ir_teto = config.remuneracaoGovernador - no_ir_teto
+        if (ir_teto > params.teto && params.teto) {
+            ir_teto = params.teto - no_ir_teto
         }
 
         return ir_teto + ir_no_teto - descontoDependente
@@ -169,7 +170,9 @@ export function useHook() {
 
         const receitasTeto = sumBy(filter(receitas, { teto: true }), 'value')
 
-        const descontoTeto = (config.remuneracaoGovernador < receitasTeto && params.teto) ? receitasTeto - config.remuneracaoGovernador : 0
+        const descontoTeto = (params.teto < receitasTeto && params.teto) ? receitasTeto - params.teto : 0
+
+
 
         return [
             // { name: 'saude', value: params.saude ? bcSaude * 0.02 : 0 },
@@ -194,5 +197,21 @@ export function useHook() {
         setOutrasReceitas(old => old.filter(o => o.id != id))
     }, [outrasReceitas])
 
-    return { changeValue, removeOutrasReceitasById, descontos, bcIR, bcPrevidencia, bcSaude, receitas, params, setParams, outrasReceitas, setOutrasReceitas }
+    const abonoPermanencia: Receita = useMemo(() => {
+
+        const descontoPrev = find(descontos, { name: 'rgps' })
+
+        return {
+            id: 'abono-permanencia',
+            name: 'ABONO DE PERMANENCIA',
+            ir: false,
+            saude: false,
+            previdencia: false,
+            teto: false,
+            value: params.abonoPermanencia ? descontoPrev?.value ?? 0 : 0,
+            grupo: "indenizacao"
+        }
+    }, [descontos])
+
+    return { changeValue, removeOutrasReceitasById, descontos, bcIR, bcPrevidencia, bcSaude, receitas: [...receitas, abonoPermanencia], params, setParams, outrasReceitas, setOutrasReceitas }
 }

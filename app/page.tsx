@@ -13,7 +13,7 @@ import { useHook } from "@/lib/hook";
 import { cn, formatNumber } from "@/lib/utils";
 import { filter, sortBy, sumBy } from "lodash";
 import { EyeIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 export default function Home() {
   const [showMenu, setShowMenu] = useState(true)
@@ -175,6 +175,36 @@ export default function Home() {
                   value={(params.complementar).toLocaleString('pt-BR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                   onChange={ev => changeValue({ complementar: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 100 })} />
               </div>
+              <div className="col-span-1">
+                <Label className="line-clamp-1 justify-between flex" title="FIDAF" htmlFor="">
+                  <span className="mr-auto">TETO</span>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      Opções
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => changeValue({ teto: config.tetoSTF })}>MIN. STF</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => changeValue({ teto: config.tetoSTF * 0.9025 })}>DES. TJ</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                  {/* {params.faaf > 0 && <span className="" onClick={() => changeValue({ faaf: 0 })}>limpar</span>} */}
+                </Label>
+                <Input
+                  value={(params.teto).toLocaleString('pt-BR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                  onChange={ev => changeValue({ teto: parseFloat(ev.target.value.replaceAll('.', '').replace(',', '') || '0') / 100 })} />
+              </div>
+              <div className="col-span-1">
+                <Label className="line-clamp-1 flex justify-between" title="Dependentes IR" htmlFor="">Em abono</Label>
+                <Select value={params.abonoPermanencia ? "S" : "N"} onValueChange={(v: any) => changeValue({ abonoPermanencia: v == "S" })}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Em abono" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="S">Sim</SelectItem>
+                    <SelectItem value="N">Nao</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
               <div className="ml-auto"></div>
               <FormProventos onSave={r => setOutrasReceitas(old => ([...old, { ...r, id: Math.random().toString() }]))}>
                 <Button variant={'outline'}><PlusIcon /> provento</Button>
@@ -184,8 +214,8 @@ export default function Home() {
           <CardContent className="p-0 border-t">
             <Table>
               <TableBody>
-                {['remuneracao', 'indenizacao'].map(grupo => ({ grupo, items: filter(receitas, { grupo }) })).map(({ grupo, items }) => <>
-                  <TableRow key={`grupo-r-${grupo}`}>
+                {['remuneracao', 'indenizacao'].map(grupo => ({ grupo, items: filter(receitas, { grupo }) })).map(({ grupo, items }) => <Fragment key={`grupo-r-${grupo}`}>
+                  <TableRow >
                     <TableHead>{grupo.toUpperCase()}</TableHead>
                     <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
                   </TableRow>
@@ -201,7 +231,7 @@ export default function Home() {
                     </TableRow>
                   ))}
 
-                </>)}
+                </Fragment>)}
 
                 <TableRow>
                   <TableHead className="bg-accent">RECEITA BRUTA</TableHead>
@@ -211,8 +241,8 @@ export default function Home() {
                   <TableCell className="border-none"></TableCell>
                 </TableRow>
 
-                {['previdencia','outros'].map(grupo => ({ grupo, items: filter(descontos, { grupo }) })).map(({ grupo, items }) => <>
-                  <TableRow key={`grupo-d-${grupo}`}>
+                {['previdencia','outros'].map(grupo => ({ grupo, items: filter(descontos, { grupo }) })).map(({ grupo, items }) => <Fragment key={`grupo-d-${grupo}`} >
+                  <TableRow>
                     <TableHead>{grupo.toUpperCase()}</TableHead>
                     <TableHead className="text-end font-bold">{formatNumber(sumBy(items, "value"))}</TableHead>
                   </TableRow>
@@ -226,7 +256,7 @@ export default function Home() {
                     </TableRow>
                   ))}
 
-                </>)}
+                </Fragment>)}
                 {/* {sortBy(descontos, 'value').filter(d => d.value > 0).reverse().map(d => (
                   <TableRow>
                     <TableCell className="uppercase pl-10 font-light">{d.name}</TableCell>
